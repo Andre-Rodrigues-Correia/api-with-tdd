@@ -1,0 +1,23 @@
+{
+  "name": "api-with-tdd",
+  "version": "1.0.0",
+  "description": "the purpose of this repository is to develop a simple api using TDD.",
+  "main": "index.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Andre-Rodrigues-Correia/api-with-tdd.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Andre-Rodrigues-Correia/api-with-tdd/issues"
+  },
+  "homepage": "https://github.com/Andre-Rodrigues-Correia/api-with-tdd#readme"
+}
