@@ -7,7 +7,7 @@ for the development of that api, was used node Js with express.
 ## Metodology
 for the development of that api, was used the TDD metodology.
 
+![TDD-image](./docs/images/tdd%20image.png)
+
 ## tets
 The ferramnet used for tests it was the Jest
-
-![TDD-image](./docs/images/tdd%20image.png)
