@@ -32,3 +32,13 @@ test('should list all accounts with success', () => {
             expect(res.body.length).toBeGreaterThan(0);
         });
 });
+
+test('should return a account per id', () => {
+    return app.db('accounts').insert({ name: 'Acc by Id', user_id: user.id }, ['id'])
+        .then((acc) => request(app).get(`${MAIN_ROUTE}/${acc[0].id}`))
+        .then((res) => {
+            expect(res.status).toEqual(200);
+            expect(res.body.name).toEqual('Acc by Id');
+            expect(res.body.user_id).toEqual(user.id);
+        });
+});
