@@ -5,12 +5,12 @@ module.exports = (app) => {
     };
 
     const create = async (req, res) => {
-        const result = await app.services.user.save(req.body);
-        if (result.error) {
-            return res.status(400).json(result);
+        try {
+            const result = await app.services.user.save(req.body);
+            return res.status(201).json(result[0]);
+        } catch (err) {
+            return res.status(400).json({ error: err.message });
         }
-
-        return res.status(201).json(result[0]);
     };
 
     return { findAll, create };
