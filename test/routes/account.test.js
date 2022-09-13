@@ -1,4 +1,5 @@
 const request = require('supertest');
+const jwt = require('jwt-simple');
 const app = require('../../src/app');
 
 const MAIN_ROUTE = '/accounts';
@@ -12,13 +13,15 @@ beforeAll(async () => {
     });
 
     user = { ...res[0] };
+    user.token = jwt.encode(user, 'Secret!');
 });
 
 test('should insert account with success', () => {
     return request(app).post(MAIN_ROUTE).send({
         name: 'Acc #1',
         user_id: user.id,
-    }).then((result) => {
+    }).set('authorization', `bearer ${user.token}`)
+    .then((result) => {
         expect(result.status).toEqual(201);
         expect(result.body.name).toEqual('Acc #1');
     });
@@ -27,7 +30,8 @@ test('should insert account with success', () => {
 test('should not insert a account without name', () => {
     return request(app).post(MAIN_ROUTE).send({
         user_id: user.id,
-    }).then((result) => {
+    }).set('authorization', `bearer ${user.token}`)
+    .then((result) => {
         expect(result.status).toEqual(400);
         expect(result.body.error).toEqual('nome é um atributo obrigatório');
     });
@@ -38,7 +42,7 @@ test.skip('should not insert account with duplicate name for the same user', () 
 
 test('should list all accounts with success', () => {
     return app.db('accounts').insert({ name: 'Acc list', user_id: user.id })
-        .then(() => request(app).get(MAIN_ROUTE))
+        .then(() => request(app).get(MAIN_ROUTE).set('authorization', `bearer ${user.token}`))
         .then((res) => {
             expect(res.status).toEqual(200);
             expect(res.body.length).toBeGreaterThan(0);
@@ -50,7 +54,7 @@ test.skip('should list account only user', () => {
 
 test('should return a account per id', () => {
     return app.db('accounts').insert({ name: 'Acc by Id', user_id: user.id }, ['id'])
-        .then((acc) => request(app).get(`${MAIN_ROUTE}/${acc[0].id}`))
+        .then((acc) => request(app).get(`${MAIN_ROUTE}/${acc[0].id}`).set('authorization', `bearer ${user.token}`))
         .then((res) => {
             expect(res.status).toEqual(200);
             expect(res.body.name).toEqual('Acc by Id');
@@ -64,7 +68,7 @@ test.skip('should not return account for other user', () => {
 test('shoult update a account', () => {
     return app.db('accounts').insert({ name: 'Acc to update', user_id: user.id }, ['id'])
         .then((acc) => request(app).put(`${MAIN_ROUTE}/${acc[0].id}`)
-        .send({ name: 'Acc updated' }))
+        .send({ name: 'Acc updated' }).set('authorization', `bearer ${user.token}`))
         .then((res) => {
             expect(res.status).toEqual(200);
             expect(res.body.name).toEqual('Acc updated');
@@ -74,7 +78,8 @@ test('shoult update a account', () => {
 test('should remove a account', () => {
     return app.db('accounts')
     .insert({ name: 'Acc to remove', user_id: user.id }, ['id'])
-    .then((acc) => request(app).delete(`${MAIN_ROUTE}/${acc[0].id}`))
+    .then((acc) => request(app).delete(`${MAIN_ROUTE}/${acc[0].id}`)
+    .set('authorization', `bearer ${user.token}`))
     .then((res) => {
       expect(res.status).toBe(204);
     });
