@@ -51,7 +51,7 @@ test('should authenticate with user not exitis', () => {
 });
 
 test('should not access proctect route without token', () => {
-    return request(app).get('/users').then((res) => {
+    return request(app).get('/v1/users').then((res) => {
             expect(res.status).toEqual(401);
         });
 });
