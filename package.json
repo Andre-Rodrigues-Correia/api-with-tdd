@@ -25,12 +25,17 @@
     "lint": "eslint src/** test/** --fix",
     "secure-mode": "jest --watch --verbose=true"
   },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint &&npm test"
+    }
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Andre-Rodrigues-Correia/api-with-tdd.git"
   },
   "keywords": [],
-  "author": "",
+  "author": "André",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Andre-Rodrigues-Correia/api-with-tdd/issues"
@@ -49,6 +54,7 @@
     "body-parser": "^1.20.0",
     "consign": "^0.1.6",
     "express": "^4.18.1",
+    "husky": "^8.0.1",
     "jwt-simple": "^0.5.6",
     "knex": "^2.3.0",
     "knex-logger": "^0.1.0",
