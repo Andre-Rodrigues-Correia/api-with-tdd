@@ -13,4 +13,18 @@ module.exports = {
         // },
         seeds: { directory: 'src/seeds' },
     },
+    prod: {
+        client: 'pg',
+        version: '14.5',
+        connection: {
+            host: 'localhost',
+            user: 'postgres',
+            password: '1234',
+            database: 'databaseprod',
+        },
+        // migrations: {
+        //     //directory: 'src/migrations',
+        // },
+
+    },
 };
