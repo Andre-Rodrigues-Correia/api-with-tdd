@@ -3,12 +3,25 @@
   "version": "1.0.0",
   "description": "the purpose of this repository is to develop a simple api using TDD.",
   "main": "index.js",
+  "jest": {
+    "coverageThreshold": {
+      "global": {
+        "statement": 80,
+        "branches": 80,
+        "functions": 80,
+        "lines": 80
+      },
+      "./src/services": {
+        "lines": 100
+      }
+    }
+  },
   "directories": {
     "doc": "docs"
   },
   "scripts": {
     "start": "node src/server.js",
-    "test": "jest",
+    "test": "jest --coverage --runInBand --forceExit",
     "lint": "eslint src/** test/** --fix",
     "secure-mode": "jest --watch --verbose=true"
   },
