@@ -20,10 +20,10 @@
     "doc": "docs"
   },
   "scripts": {
-    "start": "node src/server.js",
-    "test": "jest --coverage --runInBand --forceExit",
+    "start": "cross-env NODE_ENV=prod node src/server.js",
+    "test": "cross-env NODE_ENV=test jest --coverage --runInBand --forceExit",
     "lint": "eslint src/** test/** --fix",
-    "secure-mode": "jest --watch --verbose=true"
+    "secure-mode": "cross-env NODE_ENV=test jest --watch --verbose=true"
   },
   "husky": {
     "hooks": {
@@ -43,6 +43,7 @@
   "homepage": "https://github.com/Andre-Rodrigues-Correia/api-with-tdd#readme",
   "devDependencies": {
     "@types/jest": "^29.0.0",
+    "cross-env": "^7.0.3",
     "eslint": "^8.23.0",
     "eslint-config-airbnb-base": "^15.0.0",
     "eslint-plugin-import": "^2.26.0",
@@ -61,6 +62,9 @@
     "moment": "^2.29.4",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
-    "pg": "^8.8.0"
+    "pg": "^8.8.0",
+    "uuid": "^9.0.0",
+    "uuidv4": "^6.2.13",
+    "winston": "^3.8.2"
   }
 }

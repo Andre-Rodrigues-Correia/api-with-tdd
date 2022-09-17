@@ -1,10 +1,22 @@
 const app = require('express')();
 const consign = require('consign');
 const knex = require('knex');
+const winston = require('winston');
+const { v4: uuidv4 } = require('uuid');
 
 const knexfile = require('../knexfile');
 
-app.db = knex(knexfile.test);
+app.db = knex(knexfile[process.env.NODE_ENV]);
+
+app.log = winston.createLogger({
+    level: 'debug',
+    transports: [
+        new winston.transports.Console({ format: winston.format.json({ space: 1 }) }),
+        new winston.transports.File({
+            filename: 'logs/error.log', level: 'warn', format: winston.format.combine(winston.format.timestamp(), winston.format.json({ space: 1 })),
+        }),
+    ],
+});
 
 consign({ cwd: 'src', verbose: false })
     .include('./config/passport.js')
@@ -25,8 +37,11 @@ app.use((err, req, res, next) => {
     } else if (name === 'ResourceError') {
         res.status(403).json({ error: message });
     } else {
-        console.log(message);
-        res.status(500).json({ name, message, stack });
+        const id = uuidv4();
+        app.log.error({
+            id, name, message, stack,
+        });
+        res.status(500).json({ id, error: 'internal Error' });
     }
     next();
 });
