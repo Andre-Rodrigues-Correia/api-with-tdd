@@ -27,6 +27,7 @@ beforeAll(async () => {
 
 beforeEach(async () => {
     await app.db('transactions').del();
+    await app.db('transfers').del();
     await app.db('accounts').del();
 });
 
@@ -58,7 +59,10 @@ test('should not insert account with duplicate name for the same user', () => {
         });
 });
 
-test('should list account only user', () => {
+test('should list account only user', async () => {
+    // await app.db('transactions').del();
+    // await app.db('transfers').del();
+    // await app.db('accounts').del();
     return app.db('accounts').insert([
         { name: 'Acc user #1', user_id: user.id },
         { name: 'Acc user #2', user_id: user2.id },

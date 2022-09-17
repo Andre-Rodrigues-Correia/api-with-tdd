@@ -48,6 +48,7 @@ module.exports = (app) => {
                 type: 'O',
                 acc_id: transfer.acc_origin_id,
                 transfer_id: tranferId,
+                status: true,
             },
             {
                 description: `Transfer from acc #${transfer.acc_origin_id}`,
@@ -56,6 +57,7 @@ module.exports = (app) => {
                 type: 'I',
                 acc_id: transfer.acc_destiny_id,
                 transfer_id: tranferId,
+                status: true,
             },
         ];
 

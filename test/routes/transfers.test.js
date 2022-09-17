@@ -67,7 +67,7 @@ describe('should save a valid transfer', () => {
         });
     });
 
-    test('should ganerate equivalentstransactions', async () => {
+    test('should ganerate equivalents transactions', async () => {
         const transactions = await app.db('transactions').where({ transfer_id: transferId }).orderBy('ammount');
         expect(transactions).toHaveLength(2);
         [outcome, income] = transactions;
@@ -90,6 +90,11 @@ describe('should save a valid transfer', () => {
     test('should both reference to origin', () => {
         expect(income.transfer_id).toEqual(transferId);
         expect(outcome.transfer_id).toEqual(transferId);
+    });
+
+    test('should both have updated status', () => {
+        expect(income.status).toEqual(true);
+        expect(outcome.status).toEqual(true);
     });
 });
 
