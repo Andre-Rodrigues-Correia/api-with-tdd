@@ -20,10 +20,10 @@
     "doc": "docs"
   },
   "scripts": {
-    "start": "cross-env NODE_ENV=prod node src/server.js",
-    "test": "cross-env NODE_ENV=test jest --coverage --runInBand --forceExit",
+    "start": "node src/server.js",
+    "test": "jest --coverage --runInBand --forceExit",
     "lint": "eslint src/** test/** --fix",
-    "secure-mode": "cross-env NODE_ENV=test jest --watch --verbose=true"
+    "secure-mode": "jest --watch --verbose=true"
   },
   "husky": {
     "hooks": {
@@ -54,12 +54,14 @@
     "bcrypt-nodejs": "^0.0.3",
     "body-parser": "^1.20.0",
     "consign": "^0.1.6",
+    "cors": "^2.8.5",
     "express": "^4.18.1",
     "husky": "^8.0.1",
     "jwt-simple": "^0.5.6",
     "knex": "^2.3.0",
     "knex-logger": "^0.1.0",
     "moment": "^2.29.4",
+    "node-cmd": "^5.0.0",
     "passport": "^0.6.0",
     "passport-jwt": "^4.0.0",
     "pg": "^8.8.0",

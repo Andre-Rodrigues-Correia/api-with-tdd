@@ -6,7 +6,9 @@ const { v4: uuidv4 } = require('uuid');
 
 const knexfile = require('../knexfile');
 
-app.db = knex(knexfile[process.env.NODE_ENV]);
+app.db = knex(knexfile.prod); // api emm produção
+
+// app.db = knex(knexfile.test); api em test
 
 app.log = winston.createLogger({
     level: 'debug',
